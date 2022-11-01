@@ -16,7 +16,7 @@
 
 ## Start The application in Development Mode
 
-- Clone the Application `git clone https://github.com/santoshshinde2012/node-boilerplate.git`
+- Clone the Application `git clone https://github.com/stolbikova/backend_service.git`
 - Install the dependencies `npm install`
 - Start the application `npm run start:local`
 
