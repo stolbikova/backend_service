@@ -10,6 +10,7 @@ setGlobalEnvironment(env);
 const app: App = new App();
 let server: http.Server;
 
+
 function serverError(error: NodeJS.ErrnoException): void {
     if (error.syscall !== 'listen') {
         throw error;

@@ -7,7 +7,6 @@ import GroupModel from './group.model';
  * Group controller
  */
 export default class GroupController extends BaseApi {
-
     private basePath: string;
     private model: GroupModel;
 
@@ -15,9 +14,9 @@ export default class GroupController extends BaseApi {
      * 
      * @param basePath 
      */
-    constructor(basePath: string) {
+    constructor(basePath: string, model: GroupModel) {
         super();
-        this.model = new GroupModel();
+        this.model = model;
         this.basePath = basePath;
     }
 
@@ -33,20 +32,21 @@ export default class GroupController extends BaseApi {
         this.router.get('/:group', this.getGroup);
     }
 
-    public postGroup = (req: IPostGroupRequest, res: Response, next: NextFunction): void => {
+    public postGroup = async (req: IPostGroupRequest, res: Response, next: NextFunction): Promise<void> => {
         try {
             const { id, group } = req.params;
             const {data: {meta}} = req.body;
             let modelRes;
-            if (this.model.has(group, id)) {
-                modelRes = this.model.update(
+            const alreadyExist = await this.model.has(group, id);
+            if (alreadyExist) {
+                modelRes = await this.model.update(
                     {
                         id,
                         updatedAt: new Date().getTime()
                     }
                 )
             } else {
-                modelRes = this.model.create(
+                modelRes = await this.model.create(
                     { id, updatedAt: new Date().getTime(), createdAt: new Date().getTime(), group, meta }
                 )
             }
@@ -62,10 +62,10 @@ export default class GroupController extends BaseApi {
         }
     }
 
-    public removeGroup = (req: Request, res: Response, next: NextFunction): void => {
+    public removeGroup = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const {id, group} = req.params;
-            const modelRes = this.model.delete({ id, group });
+            const modelRes = await this.model.delete({ id, group });
             const response: IDeleteGroupResponse = {
                 data: 'Deleted client instance',
                 success: modelRes
@@ -77,9 +77,9 @@ export default class GroupController extends BaseApi {
         }
     }
 
-    public getGroups = (req: Request, res: Response, next: NextFunction): void => {
+    public getGroups = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const modelRes = this.model.getAll();
+            const modelRes = await this.model.getAll();
             const response: IGetGroupsResponse = {
                 data: modelRes
             };
@@ -90,9 +90,9 @@ export default class GroupController extends BaseApi {
         }
     }
 
-    public getGroup = (req: Request, res: Response, next: NextFunction): void => {
+    public getGroup = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const modelRes = this.model.get({ group: req.params.group });
+            const modelRes = await this.model.get({ group: req.params.group });
             const response: IGetGroupResponse = {
                 data: modelRes
             };
