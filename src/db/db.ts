@@ -1,11 +1,10 @@
 import { MongoClient } from 'mongodb';
 
 
-async function createDb({ login, password }: { login: string, password: string }): Promise<any> {
+async function createDb({ login, password, dbName, dbClusterName }: { login: string, password: string, dbName: string, dbClusterName: string }): Promise<any> {
      let db;
-     const url = `mongodb+srv://${login}:${password}@cluster0.tpdqbv9.mongodb.net/myFirstDatabase`;
+     const url = `mongodb+srv://${login}:${password}@${dbClusterName}.mongodb.net`;
      const client = new MongoClient(url);
-     const dbName = 'test';
      try {
           await client.connect();
           console.log('Connected correctly to server');
