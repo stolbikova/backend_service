@@ -18,7 +18,7 @@ export default class App {
     public async init(): Promise<void> {
         this.express = express();
         this.httpServer = http.createServer(this.express);
-        this.db = await createDb();
+        this.db = await createDb({ login: process.env.DB_LOGIN, password: process.env.DB_PASSWORD });
 
         // global middleware like cors
         this.middleware();

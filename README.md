@@ -43,7 +43,8 @@
 | **tests/helpers/**                | Helpers for test cases will be placed here  |
 | **tests/unit-tests/**             | Unit Test cases will be placed here  |
 | **tests/integration-tests/**      | API routes (Integration) Test cases will be placed here|
-
+| **mocks/**                        | mocks|
+| **ви/**                           | data base connection
 
 ## Encryption
 
