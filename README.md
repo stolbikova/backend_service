@@ -46,18 +46,6 @@
 | **mocks/**                        | mocks|
 | **ви/**                           | data base connection
 
-## Encryption
-
-Set the `APPLY_ENCRYPTION` environment variable to `true` to enable encryption.
-
-## Global Environment Object
-
-You can directly access the environment attributes in any component/file using global environment object. For more details please check file `src/global.ts`.
-
-*Example*
-
-To access the `applyEncryption` attribute from `Envionment` class to Response Handler, write `environment.applyEncryption`;
-
 
 ## Group API
 
