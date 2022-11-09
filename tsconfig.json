@@ -5,11 +5,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./build",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "alwaysStrict": true
   },
   "include": [
     "src/**/*.ts",

@@ -62,8 +62,8 @@ export default class GroupModel {
     public delete = async (
         { id, group }: { id: string; group: string }): Promise<boolean> => {
         const query = { id, group };
-        await this.col.deleteOne(query);
-        return true;
+        const res = await this.col.deleteOne(query);
+        return res;
     }
 
     /**
@@ -90,10 +90,11 @@ export default class GroupModel {
      * @param thresholdUpdatedAt
      * @return group
      */
-    public getExpired = (thresholdUpdatedAt: number): Client [] => {
+    public getExpired = async (thresholdUpdatedAt: number): Promise<Client []> => {
         const now = new Date().getTime();
-        // const  query = { updatedAt: now - item.updatedAt > thresholdUpdatedAt };
-        return clients.filter(item => now - item.updatedAt > thresholdUpdatedAt);    
+        const  query = { updatedAt: {$lt: now - thresholdUpdatedAt} };
+        const res = await this.col.find(query).toArray();
+        return res;  
     }
 
 }
