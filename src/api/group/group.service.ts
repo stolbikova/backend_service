@@ -1,11 +1,18 @@
-import GroupModel from "./group.model"
+import GroupModel from "./group.model";
+import logger from '../../lib/logger';
 
-export const checkClients = () => {
-    // const groupModel = new GroupModel();
 
-    // const expired = groupModel.getExpired(Number(process.env.EXPIRED_TIME_LIMIT));
+export const checkClients = async (groupModel): Promise<any> => {
+    const expired = await groupModel.getExpired(Number(process.env.EXPIRED_TIME_LIMIT));
 
-    // if (expired.length !==0) console.log('Expired', expired);
+    logger.info('Expired', expired);
 
-    // Delete expired items
+
+    if (expired.length !== 0) {
+        expired.map(async ({id, group}) => {
+            await groupModel.delete({
+                id, group
+            });
+        })
+    }
 }
