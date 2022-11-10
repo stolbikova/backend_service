@@ -5,6 +5,7 @@ import {
     StatusCodes,
 } from 'http-status-codes';
 import IntegrationHelpers from '../helpers/Integration-helpers';
+import logger from '../../src/lib/logger';
 
 describe('group integration tests', () => {
     let app: express.Application;
@@ -21,8 +22,7 @@ describe('group integration tests', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', contentType)
             .expect((res: request.Response) => {
-                // eslint-disable-next-line no-console
-                console.log(res.text);
+                logger.info(res.text);
             })
             .expect(StatusCodes.OK);
     });
